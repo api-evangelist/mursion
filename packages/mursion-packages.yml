@@ -1,0 +1,32 @@
+generated: '2026-08-26'
+method: searched
+source: registry searches, 2026-08-26
+package_count: 0
+official_count: 0
+note: >-
+  No first-party Mursion client library exists on any public registry. The Mursion, Inc GitHub
+  organization (https://github.com/MursionInc) is present but publishes no public repositories,
+  and Mursion ships no SDK, no CDN-distributed component and no downloadable client library —
+  consistent with having no public API. The only Mursion software a customer installs is the
+  end-user simulation client, delivered from the portal (/downloads/app/), which is an application,
+  not a package. No `SDKs` pointer is emitted.
+registries_checked:
+- registry: npm
+  query: mursion
+  url: https://registry.npmjs.org/-/v1/search?text=mursion
+  results: 0
+- registry: npm
+  query: '@mursion/sdk'
+  status: 404
+- registry: npm
+  query: mursion-sdk
+  status: 404
+- registry: PyPI
+  query: mursion
+  url: https://pypi.org/pypi/mursion/json
+  status: 404
+- registry: GitHub
+  query: github.com/MursionInc
+  status: 200
+  results: 0 public repositories
+packages: []

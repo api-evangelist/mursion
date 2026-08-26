@@ -1,0 +1,115 @@
+generated: '2026-08-26'
+method: searched
+source: https://support.mursion.com/knowledge/configuring-an-sso-for-mursion
+docs:
+- https://support.mursion.com/knowledge/configuring-an-sso-for-mursion
+- https://support.mursion.com/knowledge/configuring-saml-2.0
+- https://support.mursion.com/knowledge/configuring-saml-2.0-with-okta
+- https://support.mursion.com/knowledge/configuring-saml-2.0-with-microsoft-azure-ad
+- https://support.mursion.com/knowledge/configuring-saml-with-microsoft-entra-id
+- https://support.mursion.com/knowledge/configuring-openid-connect-with-okta
+- https://support.mursion.com/knowledge/team-assignment-via-sso
+- https://support.mursion.com/knowledge/frequently-asked-questions-about-single-sign-on-for-account-owners
+summary: >-
+  Mursion publishes no public API reference and no machine-readable contract, so there is no
+  documented API authentication scheme (no API keys, no OAuth client credentials, no published
+  token endpoint). The authentication surface Mursion DOES document publicly is enterprise
+  end-user identity federation into the Mursion Portal: SAML 2.0 and OpenID Connect, configured
+  per tenant by an account owner, with just-in-time user provisioning. This artifact records that
+  surface. Everything under apiaws.mursion.com — the REST backend the Mursion Portal SPA calls —
+  is gated: every probed path returns HTTP 403 {"message":"Missing Authentication Token"} from
+  AWS API Gateway.
+api_authentication:
+  documented: false
+  schemes: []
+  note: >-
+    No published API key, bearer token, OAuth client-credentials or mTLS scheme was found on any
+    Mursion host or in the customer knowledge base.
+user_authentication:
+  documented: true
+  default: Email and password against the Mursion Portal, with optional TOTP second factor
+    (the portal exposes /profile/validateTotp/ and /profile/resend/otp).
+  federation:
+  - protocol: SAML 2.0
+    role: Mursion is the Service Provider (SP)
+    docs: https://support.mursion.com/knowledge/configuring-saml-2.0
+    flows:
+    - SP-initiated SSO
+    provisioning: JIT (Just In Time) — learner accounts are created on first successful login
+    sp_metadata: >-
+      Downloaded as an XML "SP Metadata" file from the Mursion Portal SSO configuration screen
+      once a configuration is created; it carries the Assertion Consumer Service URL. Mursion
+      does not publish a static, tenant-independent metadata URL.
+    idp_inputs:
+    - Single Sign-On Service Endpoint (IdP login URL)
+    - Logout Endpoint (IdP logout URL)
+    - Entity ID (IdP Issuer)
+    - X.509 certificate, PEM encoded
+    nameid_format: urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+    required_attributes:
+    - name: email
+      purpose: user email address, the account key
+    - name: firstName
+      purpose: given name
+    - name: lastName
+      purpose: family name
+    optional_attributes:
+    - name: (configurable — "Team Claim Name")
+      purpose: >-
+        External team assignment; the claim value maps the user onto a Mursion team.
+      docs: https://support.mursion.com/knowledge/team-assignment-via-sso
+    verified_idps:
+    - Okta
+    - Microsoft Entra ID
+    - Microsoft Azure AD
+  - protocol: OpenID Connect
+    role: Mursion is the Relying Party (RP)
+    docs: https://support.mursion.com/knowledge/configuring-openid-connect-with-okta
+    flows:
+    - SP-initiated SSO
+    - IdP-initiated SSO
+    provisioning: JIT (Just In Time)
+    scopes:
+    - openid
+    - profile
+    - email
+    claims:
+    - claim: sub
+      maps_to: user id
+    - claim: email
+      maps_to: email
+    - claim: given_name
+      maps_to: first name
+    - claim: family_name
+      maps_to: last name
+    - claim: (configurable — "Team Claim Name")
+      maps_to: team assignment
+      required: false
+    idp_inputs:
+    - Authorization endpoint
+    - Token endpoint
+    - User Info endpoint
+    - Logout endpoint
+    - Client ID and Client Secret
+    example_idp: >-
+      Okta — https://${yourOktaDomain}/oauth2/v1/authorize, /oauth2/v1/token,
+      /oauth2/v1/userinfo, /login/signout. These are the CUSTOMER's Okta endpoints, not
+      Mursion-operated endpoints.
+    verified_idps:
+    - Okta
+  discovery:
+    openid_configuration: >-
+      Not served by Mursion. /.well-known/openid-configuration returns 404 on www.mursion.com,
+      404 on support.mursion.com, 403 on apiaws.mursion.com, and an SPA HTML shell (200) on
+      portal.mursion.com. Mursion is the relying party; the discovery document belongs to the
+      customer's IdP.
+marketplace_listings:
+- name: Okta Integration Network — Mursion
+  url: https://www.okta.com/integrations/mursion/
+  capabilities:
+  - SAML 2.0 SSO
+gaps:
+- No public API reference, therefore no documented API authentication model.
+- No published static SP metadata URL — SP metadata is per-tenant and downloaded from the portal.
+- No SCIM provisioning endpoint documented; user lifecycle is JIT-on-login plus bulk import
+  (the portal exposes /import/sso-users and /import/non-sso-users to account owners).

@@ -1,0 +1,131 @@
+generated: '2026-08-26'
+method: searched
+source: https://support.mursion.com/knowledge/for-it-teams
+note: >-
+  Mursion publishes no machine-readable contract, so nothing here is derived from a spec. Every
+  entry is asserted only where a Mursion-published page states it, or where a publicly served
+  Mursion asset demonstrates it. Where a standard is plausible for this market but unevidenced,
+  it is recorded conforms:false with what was actually checked.
+standards:
+- id: saml2
+  name: SAML 2.0 (OASIS)
+  conforms: true
+  role: Service Provider
+  evidence:
+    url: https://support.mursion.com/knowledge/configuring-saml-2.0
+    detail: >-
+      Mursion documents SP-initiated SAML 2.0 SSO with JIT provisioning, requires an IdP X.509
+      certificate and Entity ID, and pins NameID format
+      urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified.
+    http_status: 200
+- id: oidc
+  name: OpenID Connect 1.0
+  conforms: true
+  role: Relying Party
+  evidence:
+    url: https://support.mursion.com/knowledge/configuring-openid-connect-with-okta
+    detail: >-
+      Mursion documents an OIDC integration using the openid/profile/email scopes and the
+      standard sub / email / given_name / family_name claims, supporting SP- and IdP-initiated
+      SSO with JIT provisioning.
+    http_status: 200
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  role: Client (authorization code flow, as the OIDC relying party)
+  evidence:
+    url: https://support.mursion.com/knowledge/configuring-openid-connect-with-okta
+    detail: >-
+      Consumed only as the transport underneath OIDC login. Mursion does not publish an OAuth
+      authorization server of its own — /.well-known/oauth-authorization-server misses on every
+      Mursion host.
+    http_status: 200
+- id: scim
+  name: SCIM 2.0
+  conforms: false
+  evidence:
+    detail: >-
+      No SCIM schema URN, /scim/v2 endpoint, or provisioning documentation found. The Okta
+      Integration Network listing for Mursion advertises SSO, not provisioning, and the knowledge
+      base describes user lifecycle as JIT-on-login plus CSV import (/import/sso-users,
+      /import/non-sso-users in the Mursion Portal).
+    checked:
+    - https://www.okta.com/integrations/mursion/
+    - https://support.mursion.com/knowledge/frequently-asked-questions-about-single-sign-on-for-account-owners
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence:
+    detail: >-
+      The Mursion Portal backend returns a bespoke JSON error envelope
+      {"id":"<uuid>","code":"<slug>","message":"<text>"} — observed live on
+      https://portal.mursion.com/api (HTTP 503) — not application/problem+json.
+    url: https://portal.mursion.com/api
+    http_status: 503
+- id: rfc9116
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence:
+    detail: /.well-known/security.txt returns 404 on www.mursion.com and is not served on any Mursion host.
+    url: https://www.mursion.com/.well-known/security.txt
+    http_status: 404
+- id: rfc8594
+  name: RFC 8594 Sunset header / deprecation signalling
+  conforms: false
+  evidence:
+    detail: No deprecation or versioning policy is published; there is no public API to deprecate.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence:
+    detail: >-
+      No OpenAPI/Swagger document was found on www.mursion.com, portal.mursion.com,
+      apiaws.mursion.com, sandbox-apiaws.mursion.com or support.mursion.com. See x-coverage.
+domain_standards:
+- id: lti
+  name: 1EdTech Learning Tools Interoperability (LTI)
+  market: corporate learning / education technology
+  conforms: false
+  status: observed-in-product-not-published
+  evidence:
+    detail: >-
+      The Mursion Portal front-end bundle ships LTI configuration components and routes
+      (identifiers LTIConfig, LtiModal, LtiIdMustBeSpecified, and the API paths /lti/list and
+      /lti/role/), which indicates the product supports an LTI launch. This is UI evidence from a
+      publicly served JavaScript bundle, NOT a published contract: Mursion publishes no LTI tool
+      configuration URL, no JWKS, no OIDC login-initiation URL, and no LTI documentation in its
+      knowledge base or on its website. Recorded conforms:false deliberately —
+      domain_standard_conformance reads the contract, and there is no contract to read.
+    url: https://portal.mursion.com/
+    http_status: 200
+    checked:
+    - https://support.mursion.com/knowledge
+    - https://www.mursion.com/platform/
+- id: scorm-xapi-cmi5
+  name: SCORM / xAPI (Tin Can) / cmi5
+  market: corporate learning / education technology
+  conforms: false
+  evidence:
+    detail: >-
+      No SCORM package, xAPI LRS endpoint, statement API or cmi5 course structure is documented
+      or discoverable. Learner results are delivered as in-portal session reports and CSV/report
+      exports (the portal exposes /learner/activity/export, /session/learnerReport,
+      /report/sessions/export), not as an interoperable learning-record format.
+    checked:
+    - https://support.mursion.com/knowledge/the-learner-report
+    - https://support.mursion.com/knowledge/analytics
+- id: caliper-oneroster-edfi
+  name: 1EdTech Caliper Analytics / OneRoster / Ed-Fi
+  market: education technology
+  conforms: false
+  evidence:
+    detail: No Caliper sensor, OneRoster roster endpoint or Ed-Fi ODS integration documented or discoverable.
+compliance:
+  certifications_published: false
+  trust_center: https://trust.mursion.com/
+  note: >-
+    A trust center is served at trust.mursion.com (HTTP 200, Thoropass-hosted), but the page is a
+    JavaScript single-page application whose served HTML carries no content — no certification is
+    machine-readable from it, and no SOC 2 / ISO 27001 / HIPAA / FedRAMP claim appears anywhere on
+    www.mursion.com. No `Compliance` pointer is emitted, because no named certification could be
+    verified from a Mursion-served document.

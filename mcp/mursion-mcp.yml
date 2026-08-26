@@ -1,0 +1,26 @@
+generated: '2026-08-26'
+method: searched
+source: search of mursion.com, support.mursion.com, github.com/MursionInc, npm and PyPI, 2026-08-26
+status: none
+note: >-
+  No Mursion MCP server exists — hosted or local. Nothing was found on Mursion's site, in its
+  knowledge base, in the Mursion, Inc GitHub organization (no public repositories), or on npm/PyPI.
+  No candidate tool list is derived either: deriving one requires an OpenAPI to bind tools to, and
+  Mursion publishes no machine-readable contract. No `MCPServer` pointer is emitted.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+tools: []
+probes:
+- url: https://www.mursion.com/.well-known/ai-plugin.json
+  status: 404
+- url: https://registry.npmjs.org/-/v1/search?text=mursion
+  status: 200
+  result: 0 packages
+- url: https://github.com/MursionInc
+  status: 200
+  result: 0 public repositories

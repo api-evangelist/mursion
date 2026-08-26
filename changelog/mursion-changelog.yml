@@ -1,0 +1,58 @@
+generated: '2026-08-26'
+method: searched
+source: https://support.mursion.com/knowledge/mursion-release-notes
+docs: https://support.mursion.com/knowledge/mursion-release-notes
+http_status: 200
+scheme: date-based
+note: >-
+  Mursion publishes dated product release notes in its customer knowledge base. There is no
+  version number scheme, no semantic version, no RSS/Atom feed and no machine-readable changelog —
+  entries are prose grouped under a release date, and they describe the Mursion Portal and
+  simulation product, not an API. Recent window only; see the source page for the full history.
+current_version: null
+version_scheme_note: Mursion does not publish a version identifier for the platform or portal.
+feed: null
+entries:
+- date: '2026-08-11'
+  breaking: false
+  additions: true
+  highlights:
+  - Participants now see a "Your guide is ready" modal with their avatar guide visible behind it
+    before starting a session.
+  - Full keyboard navigation support added for improved accessibility.
+- date: '2026-08-10'
+  breaking: false
+  additions: true
+  highlights:
+  - Bell notifications removed in the legacy interface.
+  - Links enabled in scenario messaging.
+  - Cohort counting refined.
+  - SSO scenario link routing fixed.
+  - Accessibility compliance improved across participant flows.
+- date: '2026-07-15'
+  breaking: false
+  additions: true
+  highlights:
+  - Avatar visuals upgraded with more realistic facial detail.
+  - New gesture variety and more natural, believable movement.
+  - Cinematic depth-of-field effects added to keep focus on avatars.
+- date: '2026-07-08'
+  breaking: false
+  additions: true
+  highlights:
+  - Reschedule and cancel expanded to human-powered simulations.
+  - Duplicate scenarios allowed within a project.
+  - Session email links corrected.
+  - Recording consent terminology updated.
+- date: '2026-05-28'
+  breaking: false
+  additions: false
+  highlights:
+  - '"Leave Session" renamed to "End Session Early", with clarified messaging that ending a
+    session early means no feedback report will be generated.'
+- date: '2026-05-14'
+  breaking: false
+  additions: true
+  highlights:
+  - Virtual audio device warnings added, recommending physical microphones.
+  - Join button disabled until both the camera and microphone are ready, preventing errors when joining.

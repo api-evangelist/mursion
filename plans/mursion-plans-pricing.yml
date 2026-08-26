@@ -1,0 +1,21 @@
+generated: '2026-08-26'
+method: searched
+source: https://www.mursion.com/request-demo/
+plan_count: 0
+pricing_model: enterprise-contract, quote only
+note: >-
+  Mursion publishes no pricing. https://www.mursion.com/pricing/ returns HTTP 404, there is no
+  pricing entry in the site navigation or sitemap, and every commercial call to action on the site
+  routes to "Get a Demo" (https://www.mursion.com/request-demo/) or "Contact Us". Commercial terms
+  are carried per customer as a contract: the Mursion Portal models licensees, contracts, contract
+  line items and simulation quota internally (/client/contract/items, /contract/list,
+  /dashboard-report/schedule/utilization/contract_progress/*), and account owners see their
+  utilization against that contract in the portal — but none of it is published.
+probes:
+- url: https://www.mursion.com/pricing/
+  status: 404
+- url: https://www.mursion.com/request-demo/
+  status: 200
+- url: https://www.mursion.com/contact/
+  status: 200
+plans: []

@@ -1,17 +1,33 @@
 aid: mursion
 name: Mursion
-description: 'Mursion is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Mursion is an AI-powered immersive upskilling platform that trains workforce soft skills — leadership,
+  customer service, sales, healthcare communication and difficult conversations — through simulated
+  conversations with virtual avatars. Simulations run either human-powered (Mursion Live, where a
+  certified Simulation Specialist puppets the avatar in real time) or AI-powered (Mursion On-Demand),
+  and are delivered and administered through the Mursion Portal, a browser-based web application for
+  scheduling, cohorts, pathways, session reports and learner analytics. Mursion publishes no public
+  developer program, API reference or machine-readable contract; its documented integration surface is
+  enterprise identity — SAML 2.0 and OpenID Connect single sign-on with just-in-time provisioning and
+  team assignment via an IdP claim — documented in the customer-facing knowledge base for IT teams.
 url: https://raw.githubusercontent.com/api-evangelist/mursion/refs/heads/main/apis.yml
+image: https://www.mursion.com/wp-content/uploads/2022/10/Mursion-Logo.svg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
 - Company
+- Learning and Development
+- Corporate Training
+- Simulation
+- Immersive Learning
+- Artificial Intelligence
+- Virtual Reality
+- Education
+- Human Resources
+- Enterprise Software
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -19,5 +35,80 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/mursion-domain-security.yml
 - type: Website
+  url: https://www.mursion.com/
+- type: Documentation
+  url: https://support.mursion.com/knowledge
+- type: HelpCenter
+  url: https://support.mursion.com/knowledge
+- type: Support
+  url: https://support.mursion.com/knowledge/kb-tickets/new
+- type: Blog
+  url: https://www.mursion.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/MursionInc
+- type: Login
+  url: https://www.mursion.com/log-in/
+- type: SignUp
+  url: https://www.mursion.com/request-demo/
+- type: TermsOfService
+  url: https://www.mursion.com/terms/
+- type: PrivacyPolicy
+  url: https://www.mursion.com/privacynotice/
+- type: FAQ
+  url: https://www.mursion.com/faq/
+- type: TrustCenter
+  url: https://trust.mursion.com/
+- type: ChangeLog
+  url: https://support.mursion.com/knowledge/mursion-release-notes
+- type: SecondaryMarketListing
   url: https://forgeglobal.com/mursion_stock/
+- type: Authentication
+  url: authentication/mursion-authentication.yml
+- type: Conformance
+  url: conformance/mursion-conformance.yml
+- type: Conventions
+  url: conventions/mursion-conventions.yml
+- type: ChangeLog
+  url: changelog/mursion-changelog.yml
+- type: Lifecycle
+  url: lifecycle/mursion-lifecycle.yml
+- type: Plans
+  url: plans/mursion-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/mursion-rate-limits.yml
+- type: Packages
+  url: packages/mursion-packages.yml
+- type: LLMsTxt
+  url: llms/mursion-llms.txt
+- type: TrustCenter
+  url: security/mursion-trust-center.yml
+x-enrichment:
+  date: '2026-08-26'
+  status: minimal
+  artifacts_added: 13
+  pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    Mursion ships only an end-user product — the browser-based Mursion Portal — and runs no
+    developer program of any kind: no developer subdomain resolves, no API reference or spec is
+    served on any Mursion host, and the AWS API Gateway behind the portal (apiaws.mursion.com)
+    answers 403 "Missing Authentication Token" on every path including /openapi.json; the only
+    integration Mursion documents publicly is SAML 2.0 / OpenID Connect single sign-on for
+    customer IT teams.
+  evidence:
+  - url: https://apiaws.mursion.com/openapi.json
+    status: 403
+  - url: https://www.mursion.com/openapi.json
+    status: 404
+  - url: https://www.mursion.com/llms.txt
+    status: 404
+  - url: https://www.mursion.com/.well-known/agent-card.json
+    status: 404
+  - url: https://support.mursion.com/knowledge/configuring-saml-2.0
+    status: 200
+  checked: '2026-08-26'

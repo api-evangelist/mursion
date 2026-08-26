@@ -1,0 +1,22 @@
+generated: '2026-08-26'
+method: searched
+source: https://support.mursion.com/knowledge
+limit_count: 0
+note: >-
+  No rate limits are published. Mursion has no public API reference in which to document them, and
+  the customer knowledge base contains no throttling, quota or retry guidance. The Mursion Portal
+  backend (apiaws.mursion.com, AWS API Gateway) could not be observed unauthenticated: every path
+  returns HTTP 403 {"message":"Missing Authentication Token"} with no RateLimit-*, X-RateLimit-* or
+  Retry-After header on the response. The consumption limit a Mursion customer actually meets is
+  contractual — simulation quota drawn down against a contract and reported as "contract progress"
+  in the portal — not an HTTP rate limit.
+response_headers_observed: []
+status_code_on_exhaustion: null
+probes:
+- url: https://apiaws.mursion.com/
+  status: 403
+  headers_seen: none of RateLimit-*, X-RateLimit-*, Retry-After
+- url: https://portal.mursion.com/api
+  status: 503
+  headers_seen: none of RateLimit-*, X-RateLimit-*, Retry-After
+rate_limits: []

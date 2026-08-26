@@ -1,0 +1,59 @@
+generated: '2026-08-26'
+method: searched
+source: https://support.mursion.com/knowledge/for-it-teams
+summary: >-
+  Mursion runs a customer-facing product lifecycle, not an API lifecycle. It publishes dated
+  release notes and a recurring maintenance-window schedule in its knowledge base, but no API
+  versioning policy, no deprecation policy, no Sunset/Deprecation header contract, no SLA and no
+  status page. There is no public API to version or deprecate.
+versioning:
+  published: false
+  scheme: null
+  note: No API versioning policy published. The Mursion Portal backend uses unversioned paths
+    plus a small number of /rest/v1/* routes, but neither is documented publicly.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy page found on www.mursion.com or in the support knowledge base.
+    No `Deprecation` pointer is emitted.
+status_page:
+  published: false
+  probed:
+  - url: https://status.mursion.com/
+    result: DNS does not resolve
+  note: >-
+    No status page. The closest published surface is a scheduled-maintenance article and a
+    self-service connection diagnostic; neither reports live service state, so no `StatusPage`
+    pointer is emitted.
+maintenance_windows:
+  published: true
+  docs: https://support.mursion.com/knowledge/scheduled-maintenance
+  http_status: 200
+  windows:
+  - schedule: Mondays and Thursdays, 12:00 AM - 1:00 AM PT
+    scope: Mursion Portal may be unavailable
+    note: Thursday window added starting 2026-05-07.
+  - schedule: '2026-07-27 21:30 - 22:00 PDT'
+    scope: additional announced downtime
+    note: one-off
+sla:
+  published: false
+  note: The maintenance page states the portal "may be unavailable" during windows and makes no
+    uptime commitment, performance target or compensation term.
+release_notes:
+  published: true
+  url: https://support.mursion.com/knowledge/mursion-release-notes
+  http_status: 200
+  cadence: irregular, roughly monthly, date-stamped
+support:
+  ticketing: https://support.mursion.com/knowledge/kb-tickets/new
+  operating_hours: https://support.mursion.com/knowledge/operating-hours
+  holiday_calendar: https://support.mursion.com/knowledge/mursion-holiday-calendar
+diagnostics:
+  connection_test: https://connection-test.mursion.com/
+  http_status: 200
+  note: Self-service network/AV readiness check for learners before a simulation.
+deprecated_operations: []

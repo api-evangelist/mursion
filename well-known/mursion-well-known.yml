@@ -1,0 +1,100 @@
+generated: '2026-08-26'
+method: probed
+source: live GET probes of /.well-known/* on every Mursion host discovered in this pass
+note: >-
+  Every probe missed. www.mursion.com (WordPress/nginx) and support.mursion.com (HubSpot knowledge
+  base) return real 404s. portal.mursion.com and trust.mursion.com are single-page applications whose
+  catch-all route answers HTTP 200 with the app's HTML shell for ANY path — those 200s are NOT
+  documents and are recorded here as misses. apiaws.mursion.com is an AWS API Gateway that answers
+  403 {"message":"Missing Authentication Token"} on every path including /.well-known/*.
+  No WellKnown or SecurityTxt pointer is emitted, because nothing was served.
+hosts:
+- host: www.mursion.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: portal.mursion.com
+  note: SPA catch-all — every path returns HTTP 200 with the React shell (4,474 bytes, text/html). Treated as a miss.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/api-catalog
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/agent.json
+    status: 200
+    result: spa-shell-not-a-document
+- host: apiaws.mursion.com
+  note: AWS API Gateway — 403 "Missing Authentication Token" on every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: support.mursion.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: trust.mursion.com
+  note: SPA catch-all — every path returns HTTP 200 with the Thoropass trust-center shell (814 bytes). Treated as a miss.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: spa-shell-not-a-document
+  - path: /.well-known/agent.json
+    status: 200
+    result: spa-shell-not-a-document
+- host: assets.mursion.com
+  note: S3 origin — 403 AccessDenied on every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403

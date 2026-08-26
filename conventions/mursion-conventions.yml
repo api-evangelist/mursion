@@ -1,0 +1,99 @@
+generated: '2026-08-26'
+method: derived
+source: live probes of portal.mursion.com and apiaws.mursion.com plus support.mursion.com knowledge base
+scope: >-
+  Mursion has no public API, so there are no published API conventions. This artifact records what
+  was actually observed of the private backend that serves the Mursion Portal, and marks everything
+  else honestly unknown rather than guessing. Nothing here should be read as a contract an
+  integrator can rely on — it is not documented by Mursion and can change without notice.
+auth_style:
+  documented: false
+  observed: >-
+    Session-based login into the Mursion Portal (/auth/login/portal, /auth/refresh) with optional
+    TOTP, or federated SAML 2.0 / OIDC SSO. See authentication/mursion-authentication.yml.
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    No idempotency key, retry-safety guidance or replay window is documented anywhere. Not asserted.
+    No `Idempotency` pointer is emitted.
+pagination:
+  documented: false
+  observed_style: path-embedded offset/limit
+  note: >-
+    Portal routes embed a page window directly in the path (e.g. /avatar/list/0/1000, and a
+    recurring /0/9999 pattern), which reads as offset/limit positional segments. Undocumented and
+    not relied upon.
+field_expansion:
+  documented: false
+metadata:
+  documented: false
+request_id_tracing:
+  documented: false
+  observed: >-
+    The backend error envelope carries a per-request UUID in `id`
+    (e.g. {"id":"f7aad395-…","code":"unknown","message":"Something went wrong"}), which is a
+    correlation identifier a support ticket can quote.
+versioning:
+  documented: false
+  observed: Mostly unversioned paths; a small number of /rest/v1/* routes.
+error_envelope:
+  documented: false
+  format: bespoke JSON
+  shape: '{ "id": "<uuid>", "code": "<slug>", "message": "<human text>" }'
+  rfc9457: false
+  observed_at: https://portal.mursion.com/api
+  observed_status: 503
+rate_limit_signaling:
+  documented: false
+  headers: []
+  note: See rate-limits/mursion-rate-limits.yml — no rate-limit headers observed on any unauthenticated response.
+dry_run_mode:
+  supported: na
+  note: No public write API.
+reversibility:
+  grade: na
+  applies: false
+  note: >-
+    Reversibility is not applicable: Mursion exposes no public write API, so there is no agent-
+    reachable action to reverse. At the PRODUCT level Mursion does document reversal paths — a
+    learner or account owner can cancel or reschedule a scheduled simulation from the portal — but
+    no window is stated for either. The cancellation article says only that "if you cancel or
+    reschedule your session too close to your session time, your organization may still be charged
+    for your session", without naming a cut-off, so no window is recorded here. Recording one would
+    be inventing a commercial term.
+  product_level_reversals:
+  - action: Cancel a scheduled simulation
+    operation: null
+    window: null
+    window_stated: false
+    docs: https://support.mursion.com/knowledge/how-do-i-cancel-a-session
+  - action: Reschedule a scheduled simulation
+    operation: null
+    window: null
+    window_stated: false
+    docs: https://support.mursion.com/knowledge/rescheduling-a-simulation
+    note: Availability depends on the customer's portal configuration.
+  - action: Restore an archived user
+    operation: null
+    window: null
+    window_stated: false
+    docs: https://support.mursion.com/knowledge/archiving-a-user
+    note: >-
+      The portal exposes restore routes across most entities (/user/client/restore/,
+      /client/restore/, /project/restore/, /scenario/restore/, /team/restore/), i.e. archival is
+      soft and reversible — observed in the portal bundle, not documented publicly.
+infrastructure_notes:
+  api_host: https://apiaws.mursion.com
+  api_host_status: 403 Missing Authentication Token (AWS API Gateway) on every probed path
+  sandbox_host: https://sandbox-apiaws.mursion.com
+  realtime: >-
+    Simulations use LiveKit for WebRTC media; Mursion publishes the allowlist requirements
+    (*.livekit.cloud, *.turn.livekit.cloud, *.host.livekit.cloud; TCP 443, UDP 3478, 7881,
+    50000-60000, 49152-65535) for customer IT teams.
+  realtime_docs: https://support.mursion.com/knowledge/ai-powered-simulations-tech-implementation-and-network-requirements
+cross_links:
+  authentication: authentication/mursion-authentication.yml
+  lifecycle: lifecycle/mursion-lifecycle.yml
+  rate_limits: rate-limits/mursion-rate-limits.yml
+  conformance: conformance/mursion-conformance.yml
