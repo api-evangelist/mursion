@@ -11,6 +11,17 @@ description: >-
   enterprise identity — SAML 2.0 and OpenID Connect single sign-on with just-in-time provisioning and
   team assignment via an IdP claim — documented in the customer-facing knowledge base for IT teams.
 url: https://raw.githubusercontent.com/api-evangelist/mursion/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.mursion.com/wp-content/uploads/2022/10/Mursion-Logo.svg
 x-type: company
 x-source: harvest:secondary-market
